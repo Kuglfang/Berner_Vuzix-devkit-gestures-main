@@ -3,44 +3,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:backgroundTint="#FFFFFF"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/exit_textView"
-        android:layout_width="match_parent"
+        android:id="@+id/starttimetext"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/exit_app"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textSize="12sp"
-        android:textStyle="bold" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/basic_gestures"
-        android:textSize="12sp"/>
+        android:layout_marginTop="20dp"
+        android:text="Timer"
+        android:textSize="24sp" />
 
-    <!--Remove the visibility=gone to see some dynamic text in the UI.
-    Also reduce or set visibility=gone to the two items above-->
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/starttime"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/log_area"
-        android:textAlignment="viewStart"
-        android:textSize="12sp"
-        android:visibility="gone"/>
+        android:layout_marginTop="20dp"
+        android:hint="@string/hintstart"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/stoptime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:hint="@string/hintstop"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/stoptimetext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/time"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:hint="@string/hinttime"
+        android:textSize="24sp" />
+
 
     <EditText
         android:id="@+id/logArea"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="12sp"
         android:enabled="false"
         android:inputType="textMultiLine"
         android:paddingBottom="5dp"
         android:selectAllOnFocus="false"
         android:textAlignment="viewStart"
-        android:visibility="gone"/>
+        android:textSize="12sp"
+        android:visibility="gone" />
 
 </LinearLayout>

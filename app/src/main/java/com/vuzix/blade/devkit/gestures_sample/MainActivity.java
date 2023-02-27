@@ -7,7 +7,12 @@ import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.vuzix.blade.devkit.gestures_sample.databinding.ActivityMainBinding;
 import com.vuzix.hud.actionmenu.ActionMenuActivity;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Main Activity that extend ActionMenuActivity.
@@ -20,14 +25,21 @@ import com.vuzix.hud.actionmenu.ActionMenuActivity;
  */
 public class MainActivity extends ActionMenuActivity {
 
+    private ActivityMainBinding binding; //faster than by id
     private final String TAG = "VuzixBDK-Gesture_Sample";
     private EditText logArea;
     private Toast mToast;
 
+    Date datestartV1;//V1
+    Date datestopV1;//V1
+
+    boolean firsttime = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater()); //faster than by id
+        setContentView(binding.getRoot()); //faster than by id
 
 
         logArea = findViewById(R.id.logArea);
@@ -45,7 +57,7 @@ public class MainActivity extends ActionMenuActivity {
         // way they want. This is just for showing the available events.
 //        return super.onKeyDown(keyCode, event);
 
-        Log.d(TAG, "Key Code: " + String.valueOf(keyCode) );
+        /*Log.d(TAG, "Key Code: " + String.valueOf(keyCode) ); Von mir auskomentiert
         Log.d(TAG,"Key Event: " + event.toString());
 
         if(event.getAction() == KeyEvent.ACTION_DOWN)
@@ -54,7 +66,7 @@ public class MainActivity extends ActionMenuActivity {
             logArea.append("\n Key Event: " + event.toString());
             showToast("Key Code: " + String.valueOf(keyCode) +
                     " \n Shortcut Key Event: " + event.toString());
-        }
+        }*/
 
 
         return false;
@@ -79,17 +91,67 @@ public class MainActivity extends ActionMenuActivity {
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
 
-        Log.d(TAG,"DispatchKey Event: " + event.toString());
+        if(event.getAction() == KeyEvent.ACTION_DOWN)
+        {
+            if(firsttime)
+            {
+                datestartV1 = Calendar.getInstance().getTime();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+                String dateTime = simpleDateFormat.format(datestartV1).toString();
+                binding.starttime.setText(dateTime);
 
-        if (event.getAction() == KeyEvent.ACTION_DOWN){
-            logArea.append("\n DispatchKey Event: " + event.toString());
-            showToast("DispatchKey Event: " + event.toString());
+                binding.stoptime.setText("Stop Time");
+                binding.time.setText("0h 0m 0s");
+                firsttime = false;
+            }
+            else
+            {
+                datestopV1 = Calendar.getInstance().getTime();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+                String dateTime = simpleDateFormat.format(datestopV1).toString();
+                binding.stoptime.setText(dateTime);
+
+                int diffhour = datestopV1.getHours() - datestartV1.getHours();
+                int diffmin = datestopV1.getMinutes() - datestartV1.getMinutes();
+                int diffsec = (datestopV1.getSeconds() - datestartV1.getSeconds());
+
+                if (datestopV1.getSeconds() - datestartV1.getSeconds() < 0)
+                {
+                    diffmin -= 1;
+                    diffsec = 60 - (diffsec * -1);
+                }
+
+                if (datestopV1.getMinutes() - datestartV1.getMinutes() < 0)
+                {
+                    diffhour -=1;
+                    diffmin = 60 - (diffmin * -1);
+                }
+
+                binding.time.setText(diffhour + "h " + diffmin + "m " + diffsec + "s");
+
+                firsttime = true;
+            }
         }
-
 
 
         return super.dispatchKeyEvent(event);
     }
+
+
+
+
+    /*Log.d(TAG,"DispatchKey Event: " + event.toString());
+
+        if (event.getAction() == KeyEvent.ACTION_DOWN){
+            logArea.append("\n DispatchKey Event: " + event.toString());
+            showToast("DispatchKey Event: " + event.toString());
+        }*/
+
+
+
+
+
+
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -122,7 +184,6 @@ public class MainActivity extends ActionMenuActivity {
         // You always want to return the super event to have the system actually handle the event the
         // way they want. This is just for showing the available events.
 //        return super.dispatchKeyShortcutEvent(event);
-
         Log.d(TAG,"Shortcut Key Event: " + event.toString());
 
         logArea.append("\n Shortcut Key Event: " + event.toString());

@@ -15,4 +15,18 @@
     - Three Finger Tap = Screen OFF \n
     - Three Finger Hold = Assistant Activation \n</string>
     <string name="log_area">Input received by system</string>
+
+    <string name="startbutton">start</string>
+    <string name="stopbutton">stop</string>
+    <string name="starttime">Start time</string>
+    <string name="stoptime">Stop time</string>
+    <string name="time">Time</string>
+    <string name="hintstart">Press Start</string>
+    <string name="hintstop">Press Stop</string>
+    <string name="hinttime">Time</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+    <string name="seconds">Seconds</string>
+    <string name="errorstopforstart">You cant press stop for start!</string>
+
 </resources>
